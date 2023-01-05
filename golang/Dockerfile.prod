@@ -1,0 +1,15 @@
+FROM golang as builder
+
+WORKDIR /go/src
+
+COPY ola-mundo.go /go/src
+
+RUN go build ola-mundo.go
+
+#ENTRYPOINT ["/go/src/ola-mundo"]
+
+FROM scratch
+
+COPY --from=builder /go/src/ola-mundo /go/src/ola-mundo
+
+ENTRYPOINT ["/go/src/ola-mundo"]
